@@ -1,0 +1,124 @@
+table {
+width: 95%;
+border-collapse: collapse;
+background-color: white;
+box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+margin: 0px 20px 20px 20px;
+}
+
+.tabhead{
+  font-weight: bold;
+  background-color: #3498db;
+  color: white;
+}
+
+th, td {
+padding: 12px;
+border: 1px solid #ddd;
+text-align: center;
+text-decoration: none;
+}
+
+table th {
+    background-color: #3498db;
+    color: white;
+}
+
+table td a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+table td a:hover {
+    text-decoration: underline;
+}
+
+.btndelete {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btndelete:hover {
+    background-color: #c0392b;
+}
+
+.pagination {
+margin-top: 20px;
+text-align: center;
+}
+.pagination a {
+margin: 0 5px;
+text-decoration: none;
+padding: 8px 16px;
+color: #e74c3c;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+.pagination a.active {
+background-color: #3498db;
+color: white;
+font-weight: bold;
+border-color: #3498db;
+}
+
+.pagination a:hover {
+    background-color: #2980b9;
+    color: white;
+
+}
+
+.form-container {
+            background-color: #fff;
+            max-width: 70px;
+            margin: 50px auto;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+}
+
+.form-container h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 6px;
+font-weight: bold;
+color: #333;
+}
+
+        .form-group input,
+        .form-group select {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        #btnsubmit {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 50%;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #btnsubmit:hover {
+            background-color: #2980b9;
+        }
+
