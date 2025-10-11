@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food And Beverage System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="script.js">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="image/logo.png" alt="Logo" class="logo">
+                <span class="fw-bold fs-3">Food and Beverage</span>
+            </a>            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Products.html">Product</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+    
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="3000">
+                <img src="image/img3.jpg" class="d-block w-100 img-fluid" alt="...">
+                <div class="carousel-caption ">
+                    <h5>EAT GOOD LIFE GOOD</h5>
+                    <p>Experience flavors that bring comfort and joy to every bite.</p>
+                </div>
+            </div>
+    
+            <div class="carousel-item" data-bs-interval="3000">
+                <img src="image/img2.jpg" class="d-block w-100 img-fluid" alt="...">
+                <div class="carousel-caption ">
+                    <h5>EAT GOOD LIFE GOOD</h5>
+                    <p>Delicious meals made with love, served fast and fresh.</p>
+                </div>
+            </div>
+    
+            <div class="carousel-item" data-bs-interval="3000">
+                <img src="image/img1.jpg" class="d-block w-100 img-fluid" alt="...">
+                <div class="carousel-caption ">
+                    <h5>EAT GOOD LIFE GOOD</h5>
+                    <p>Affordable flavors, unforgettable taste — only at Food & Beverage.</p>
+                </div>
+            </div>
+        </div>
+    
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+    
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+                
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+                        <h3 class="text-center">Login</h3>
+                        <form>
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="loginEmail" placeholder="Enter email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                    </div>
+
+                    <div class="col-md-1 d-none d-md-block"></div>
+
+                    <div class="col-md-5">
+                        <h3 class="text-center">Register</h3>
+                        <form>
+                            <div class="mb-3">
+                                <label for="registerName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="registerName" placeholder="Enter full name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerEmail" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="registerEmail" placeholder="Enter email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="registerPassword" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        <footer class="custom-footer">
+        <div class="container">
+            <div class="row align-items-center">
+              <div class="col-md-4 text-center text-md-start">
+                <a href="#"><img src="image/fbcon.png" alt="Facebook" class="social-icon"></a>
+                <a href="#"><img src="image/inscon.png" alt="Instagram" class="social-icon"></a>
+                <a href="#"><img src="image/tikcon.png" alt="TikTok" class="social-icon"></a>
+              </div>
+        
+
+              <div class="col-md-4 text-center">
+                <a href="#">GIFT CARDS</a>
+                <a href="#">JOBS</a>
+                <a href="#">CONTACT</a>
+                <a href="#">ACCESSIBILITY</a>
+              </div>
+    </footer>
+
+    <footer class="secondary-footer">
+        <div class="text-center powered-text">
+            <p>Powered by ALMITECH</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food And Beverage System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="script.js">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="image/logo.png" alt="Logo" class="logo">
+                <span class="fw-bold fs-3">Food and Beverage</span>
+            </a>            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Products.html">Product</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+        <!-- Contact Section -->
+    <div class="container my-5" id="contact">
+        <h2 class="text-center mb-4">Contact Us</h2>
+        <div class="row">
+            <!-- Contact Form -->
+            <div class="col-md-6">
+                <form>
+                    <div class="mb-3">
+                        <label for="contactName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="contactName" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="contactEmail" placeholder="yourname@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactMessage" class="form-label">Message</label>
+                        <textarea class="form-control" id="contactMessage" rows="5" placeholder="Your message..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="col-md-6">
+                <div class="p-4 rounded shadow-sm bg-light h-100">
+                    <h5 class="mb-3 text-orange">Food and Beverage Contact Info</h5>
+                    <p><strong>📍 Address:</strong> 123 Flavor Street, Manila City, Philippines</p>
+                    <p><strong>📞 Phone:</strong> +63 912 345 6789</p>
+                    <p><strong>✉️ Email:</strong> support@foodandbeverage.ph</p>
+                    <p><strong>⏰ Business Hours:</strong><br>
+                        Monday - Saturday: 9:00 AM – 9:00 PM<br>
+                        Sunday: 10:00 AM – 6:00 PM
+                    </p>
+                    <p><strong>📱 Social Media:</strong><br>
+                        <a href="#" target="_blank">Facebook</a> |
+                        <a href="#" target="_blank">Instagram</a> |
+                        <a href="#" target="_blank">TikTok</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="custom-footer">
+        <div class="container">
+            <div class="row align-items-center">
+              <div class="col-md-4 text-center text-md-start">
+                <a href="#"><img src="image/fbcon.png" alt="Facebook" class="social-icon"></a>
+                <a href="#"><img src="image/inscon.png" alt="Instagram" class="social-icon"></a>
+                <a href="#"><img src="image/tikcon.png" alt="TikTok" class="social-icon"></a>
+              </div>
+        
+
+              <div class="col-md-4 text-center">
+                <a href="#">GIFT CARDS</a>
+                <a href="#">JOBS</a>
+                <a href="#">CONTACT</a>
+                <a href="#">ACCESSIBILITY</a>
+              </div>
+    </footer>
+
+    <footer class="secondary-footer">
+        <div class="text-center powered-text">
+            <p>Powered by ALMITECH</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+      
+    
+</body>
+</html>
