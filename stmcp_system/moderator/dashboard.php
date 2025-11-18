@@ -22,6 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 mysqli_query($conn, "UPDATE orders SET order_status='completed' WHERE id='$order_id'");
                 break;
             case 'approve_refund':
+                // ❗ Prevent refund approval if already Ready for Pickup
+                $check = mysqli_fetch_assoc(mysqli_query($conn, "
+                    SELECT order_status FROM orders WHERE id='$order_id'
+                "));
+                if ($check && $check['order_status'] === 'ready_for_pickup') {
+                    $_SESSION['refund_error'] = "Cannot approve refund. Order is already Ready for Pickup.";
+                    break;
+                }
                 mysqli_query($conn, "UPDATE orders SET refund_status='approved', payment_status='refunded', order_status='refunded' WHERE id='$order_id'");
                 break;
             case 'reject_refund':
@@ -68,12 +76,21 @@ button { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; c
 .approve { background-color: green; }
 .reject { background-color: red; }
 .actions form { display: inline; margin: 0; }
+.error-box { background:#ffcccc;padding:10px;margin:10px;border-left:4px solid #c00; color:#900; }
 </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Moderator Dashboard - Orders</h2>
+
+    <!-- 🔔 Display refund error -->
+    <?php if (isset($_SESSION['refund_error'])): ?>
+        <div class="error-box">
+            <?= $_SESSION['refund_error']; ?>
+        </div>
+        <?php unset($_SESSION['refund_error']); ?>
+    <?php endif; ?>
 
     <div class="tabs">
         <button class="tab-btn active" onclick="filterOrders('all', this)">All</button>
@@ -97,10 +114,7 @@ button { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; c
         <?php while ($order = mysqli_fetch_assoc($orders)): ?>
         <tr data-method="<?= $order['payment_method'] ?>">
             <td><?= $order['id'] ?></td>
-
-            <!-- FULL NAME DITO NA -->
             <td><?= $order['fullname'] ? $order['fullname'] : 'Unknown User' ?></td>
-
             <td>₱<?= number_format($order['total_amount'], 2) ?></td>
             <td><?= ucfirst($order['payment_method']) ?></td>
             <td><?= ucfirst($order['payment_status']) ?></td>
@@ -148,7 +162,7 @@ button { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; c
                         </form>
                     <?php endif; ?>
 
-                    <?php if ($order['refund_status'] === 'requested'): ?>
+                    <?php if ($order['refund_status'] === 'requested' && $order['order_status'] !== 'ready_for_pickup'): ?>
                         <form method="POST">
                             <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
                             <input type="hidden" name="action" value="approve_refund">
