@@ -29,6 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /* Request Refund */
     if ($order_id && $action === 'request_refund') {
+
+        // ⛔ PREVENT REFUND IF READY FOR PICKUP
+        $check_status = mysqli_fetch_assoc(mysqli_query($conn, "
+            SELECT order_status FROM orders 
+            WHERE id='$order_id' AND user_id='$user_id'
+        "));
+
+        if ($check_status && $check_status['order_status'] === 'ready_for_pickup') {
+            $_SESSION['refund_error'] = "Refund not allowed. Your order is already marked as Ready for Pickup.";
+            header("Location: my_orders.php");
+            exit;
+        }
+
+        // Existing refund validation
         $order_check = mysqli_query($conn, "
             SELECT * FROM orders 
             WHERE id='$order_id' 
@@ -89,6 +103,14 @@ $result = mysqli_query($conn, "
     <a href="cart.php">🛒 Cart</a>
     <a href="logout.php">🚪 Logout</a>
 </div>
+
+<!-- 🔔 Display error message -->
+<?php if (isset($_SESSION['refund_error'])): ?>
+    <div style="background:#ffdddd;padding:10px;margin:10px 0;border-left:4px solid #d00;color:#b00;">
+        <?= $_SESSION['refund_error']; ?>
+    </div>
+    <?php unset($_SESSION['refund_error']); ?>
+<?php endif; ?>
 
 <?php if (mysqli_num_rows($result) > 0): ?>
 <table>
@@ -154,7 +176,7 @@ $rs_map = [
         <?php if (
             in_array($order['payment_status'], ['paid', 'verified']) &&
             $order['refund_status'] == 'none' &&
-            !in_array($order['order_status'], ['completed', 'cancelled', 'refunded'])
+            !in_array($order['order_status'], ['completed', 'cancelled', 'refunded', 'ready_for_pickup'])
         ): ?>
             <button class="button refund-btn" data-id="<?= $order['id'] ?>">Request Refund</button>
         <?php endif; ?>
