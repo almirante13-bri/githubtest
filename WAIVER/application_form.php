@@ -2,12 +2,11 @@
 session_start();
 require_once 'connection.php';
 
-// TEMP user ID 
+// TEMP user ID para gumana kahit walang login
 $user_id = $_SESSION['user_id'] ?? 1;
 
-// Save waiver acceptance kapag na submit
+// Save waiver acceptance kapag na-submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_waiver'])) {
-
     $stmt = $conn->prepare("
         INSERT INTO waiver_acceptance (user_id, waiver_accepted, waiver_accepted_at)
         VALUES (?, 1, NOW())
@@ -19,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_waiver'])) {
     $stmt->execute();
 }
 
-// CHECK if ang user ay inaccept na ang waiver
+// CHECK if ang user ay na-accept na ang waiver
 $check = $conn->prepare("SELECT waiver_accepted FROM waiver_acceptance WHERE user_id = ?");
 $check->bind_param("i", $user_id);
 $check->execute();
@@ -31,27 +30,20 @@ $alreadyAccepted = $row && $row['waiver_accepted'] == 1;
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Application Form</title>
+<meta charset="UTF-8">
+<title>Application Form</title>
 
 <style>
-/* MAIN FONT */
-body {
-    font-family: "Inter", sans-serif;
-}
+body { font-family: "Inter", sans-serif; margin:0; padding:0; }
 
 /* MODAL OVERLAY */
-
 .modal-overlay {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
     background: rgba(0,0,0,0.55);
     backdrop-filter: blur(3px);
-    justify-content: center;
-    align-items: center;
+    justify-content: center; align-items: center;
     z-index: 99999;
 }
 
@@ -64,7 +56,7 @@ body {
     overflow: hidden;
 }
 
-/* HEADER (yellow bar) */
+/* HEADER */
 .waiver-header {
     background: #f6dd8c;
     padding: 14px 18px;
@@ -72,20 +64,8 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-
-.waiver-title {
-    font-size: 17px;
-    font-weight: 600;
-    color: #3a2e00;
-}
-
-.waiver-close {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    color: #3a2e00;
-}
+.waiver-title { font-size: 17px; font-weight: 600; color: #3a2e00; }
+.waiver-close { background: none; border: none; font-size: 18px; cursor: pointer; color: #3a2e00; }
 
 /* BODY */
 .waiver-body {
@@ -93,19 +73,12 @@ body {
     max-height: 430px;
     overflow-y: auto;
 }
+.waiver-body p { font-size: 14px; color: #222; line-height: 1.55; margin-bottom: 12px; }
+.waiver-section-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
 
-.waiver-body p {
-    font-size: 14px;
-    color: #222;
-    line-height: 1.55;
-    margin-bottom: 12px;
-}
-
-.waiver-section-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
+/* SIGNATURE BLOCK */
+.signature-block { margin-top:30px; }
+.signature-block p { font-size:14px; display:block; white-space:pre; margin-bottom:5px; }
 
 /* FOOTER BUTTONS */
 .modal-buttons {
@@ -115,7 +88,6 @@ body {
     background: #fafafa;
     border-top: 1px solid #e2e2e2;
 }
-
 .yellow-btn {
     flex: 1;
     margin: 0 5px;
@@ -128,10 +100,7 @@ body {
     font-weight: 600;
     transition: 0.2s;
 }
-
-.yellow-btn:hover {
-    background: #efb930;
-}
+.yellow-btn:hover { background: #efb930; }
 </style>
 
 </head>
@@ -140,10 +109,8 @@ body {
 <h2>Application Form</h2>
 
 <form method="POST">
-
-    <!-- CHECKBOX + READ LINK -->
     <label style="font-size: 16px; display:block; width:600px;">
-        <input type="checkbox" name="accept_waiver" required>
+        <input type="checkbox" name="accept_waiver" required <?php if($alreadyAccepted) echo "checked"; ?>>
         I acknowledge the risks involved in participating in the club's events and agree to the waiver
         liability for any injuries or damages that may occur.
         <a href="javascript:void(0);" id="openWaiverBtn" style="color:blue; text-decoration:underline;">
@@ -160,16 +127,10 @@ body {
     <input type="email" name="email" required><br><br>
 
     <button type="submit">Submit Application</button>
-
 </form>
 
-
-
-
-<!-- WAIVER MODAL (UPDATED DESIGN)-->
-
+<!-- WAIVER MODAL -->
 <div id="waiverModal" class="modal-overlay">
-
     <div class="waiver-modal-box">
 
         <!-- HEADER -->
@@ -180,8 +141,7 @@ body {
 
         <!-- BODY -->
         <div class="waiver-body" id="waiverContent">
-
-            <h3 class="waiver-section-title">📄 WAIVER AND LIABILITY TERMS</h3>
+            <h3 class="waiver-section-title">WAIVER AND LIABILITY TERMS</h3>
 
             <p>This waiver is provided for informational purposes. All 
             members and participants are encouraged to read and understand the 
@@ -203,67 +163,78 @@ body {
             protocols, including wearing proper safety gear and ensuring their 
             motorcycles are in roadworthy condition.</p>
 
-            <p>This waiver remains in effect throughout the participant’s 
+            <p>This waiver remains in effect throughout the participant's 
             involvement with the Club and applies to all current and future 
             events, unless otherwise revoked in writing.</p>
 
+            <!-- SIGNATURE SECTION -->
+            <div class="signature-block">
+                <p>Signature: ____________________________</p>
+                <p id="waiverDate">Date: ____________________________</p>
+            </div>
         </div>
 
         <!-- BUTTONS -->
         <div class="modal-buttons">
-            <button onclick="downloadPDF()" class="yellow-btn">Download PDF</button>
-            <button onclick="downloadDOCX()" class="yellow-btn">Download DOCX</button>
-            <button onclick="printWaiver()" class="yellow-btn">Print</button>
+            <button type="button" onclick="downloadPDF()" class="yellow-btn">Download PDF</button>
+            <button type="button" onclick="downloadDOCX()" class="yellow-btn">Download DOCX</button>
+            <button type="button" onclick="printWaiver()" class="yellow-btn">Print</button>
         </div>
-
     </div>
 </div>
 
-
-
-<!-- JAVASCRIPT -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-document.getElementById("openWaiverBtn").onclick = function() {
-    document.getElementById("waiverModal").style.display = "flex";
-};
-
-function closeWaiverModal() {
+    
+// ---- GLOBAL FUNCTIONS ----
+window.closeWaiverModal = function() {
     document.getElementById("waiverModal").style.display = "none";
 }
 
-function printWaiver() {
-    var w = window.open('', '', 'width=800,height=600');
-    w.document.write("<html><head><title>Waiver</title></head><body>");
-    w.document.write(document.getElementById("waiverContent").innerHTML);
-    w.document.write("</body></html>");
-    w.document.close();
-    w.print();
+// AUTO SET DATE
+function setDate() {
+    const dateEl = document.getElementById('waiverDate');
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    dateEl.textContent = 'Date: ' + formattedDate;
 }
 
-function downloadDOCX() {
-    const text = document.getElementById("waiverContent").innerText;
-    const blob = new Blob([text], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-    const url = URL.createObjectURL(blob);
+// DOWNLOAD PDF 
+window.downloadPDF = function() { 
+    setDate();
+    const waiverContent = document.getElementById('waiverContent');
+    html2pdf().from(waiverContent).save();
+}
 
+// DOWNLOAD DOCX
+window.downloadDOCX = function() {
+    setDate();
+    const htmlContent = document.getElementById("waiverContent").innerHTML;
+    const blob = new Blob([htmlContent], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "Waiver.docx";
     a.click();
 }
 
-function downloadPDF() {
-    const text = document.getElementById("waiverContent").innerText;
-    const blob = new Blob([text], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "Waiver.pdf";
-    a.click();
+// PRINT
+window.printWaiver = function() {
+    setDate();
+    const w = window.open('', '', 'width=800,height=600');
+    const waiverContent = document.getElementById("waiverContent");
+    w.document.write("<html><head><title>Waiver</title></head><body>");
+    w.document.write(waiverContent.innerHTML);
+    w.document.write("</body></html>");
+    w.document.close();
+    w.print();
 }
-</script>
 
+// MODAL OPEN
+document.getElementById("openWaiverBtn").addEventListener("click", function() {
+    document.getElementById("waiverModal").style.display = "flex";
+});
+</script>
 
 </body>
 </html>
